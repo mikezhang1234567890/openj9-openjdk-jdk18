@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.time.ZonedDateTime;
 
 /*
  * @test
@@ -199,6 +200,12 @@ public class PropertiesStoreTest {
             Assert.fail("No comment line found in the stored properties file " + file);
         }
         try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN);
+            System.out.println("Formatter locale: " + formatter.getLocale() + " resolver style: " + formatter.getResolverStyle());
+            ZonedDateTime t = ZonedDateTime.now();
+            String t_str = t.format(DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN));
+            System.out.println("formatted time: " + t_str);
+            System.out.println("date comment: " + comment);
             DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN).parse(comment);
         } catch (DateTimeParseException pe) {
             Assert.fail("Unexpected date comment: " + comment, pe);
